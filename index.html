@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DFB</title>
+</head>
+<body>
+    <script src='/socket.io/socket.io.js'></script>
+    <script> 
+        var socket = io();
+
+        // ID pour chaque utilisateur
+        var userId = Math.random().toString(36).substr(2, 9);
+
+        // Envoi de message avec le bouton compilant les informations
+        var send = function() {
+            var username = document.getElementById('username').value;
+            var text = document.getElementById('send message').value;
+            var timestamp = new Date().toISOString()
+            socket.emit('chat message', {userId: userId, username: username, text: text, timestamp: timestamp});
+        }
+
+
+        // Renvoyer les messages dans la chat box 
+
+        var receive = function(message) {
+            var li = document.createElement('li');
+            li.appendChild(document.createTextNode('[' + message.timestamp + '] [' + message.username + ' ] : ' + message.text));
+            document.getElementById('messages').appendChild(li);
+        }
+
+        socket.on('chat message', function(msg){
+            receive(msg);
+        });
+    </script>
+    <div>
+        <ul id="messages"></ul>
+        <div class="text">
+            <input id="username" placeholder="Nom d'utilisateur"/>
+            <input id="send message" placeholder="Message"/>
+            <button onclick="send()">Send</button>
+        </div>
+    </div>
+</body>
+</html>

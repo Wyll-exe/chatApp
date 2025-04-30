@@ -1,19 +1,1 @@
-# Dependencies
-node_modules/
-package-lock.json
-
-# Environment variables
 .env
-
-# Logs
-logs
-*.log
-npm-debug.log*
-
-# Runtime data
-pids
-*.pid
-*.seed
-
-# Optional npm cache directory
-.npm

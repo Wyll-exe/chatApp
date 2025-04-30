@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs</title>
+</head>
+<body>
+    <h1>Logs</h1>
+    <ul id="logList"></ul>
+
+    <script>
+        fetch('/logs')
+            .then(response => response.json())
+            .then(logs => {
+                const logList = document.getElementById('logList');
+                logs.sort((a, b) => a.id.localeCompare(b.id)); // Trier par ID
+                logs.forEach(log => {
+                    const li = document.createElement('li');
+                    li.textContent = `ID: ${log.id}, Name: ${log.name}, Message: ${log.message}, Date: ${log.date}, Heure: ${log.heure}`;
+                    logList.appendChild(li);
+                });
+            });
+    </script>
+</body>
+</html>
